@@ -1,0 +1,51 @@
+---
+- name: Steps a serem executados depois do Symlink
+  debug:
+    msg: ""
+
+- name: Removendo 'uploads' de Current
+  file:
+    path: "{{ ansistrano_deploy_to }}/current/wp-content/uploads"
+    state: absent
+
+- name: Copiando 'uploads' de Shared
+  copy: 
+    src: "{{ ansistrano_deploy_to }}/shared/uploads"
+    dest: "{{ ansistrano_deploy_to }}/current/wp-content"
+    remote_src: yes
+  ignore_errors: yes
+
+- name: Copiando .htaccess de Shared
+  copy: 
+    src: "{{ ansistrano_deploy_to }}/shared/.htaccess"
+    dest: "{{ ansistrano_deploy_to }}/current/"
+    remote_src: yes
+
+- name: DOCKER | Wordpress Container
+  docker_container:
+    name: "{{ APP_NAME }}"
+    image: wordpress
+    hostname: "{{ APP_NAME }}"
+    state: started
+    recreate: yes
+    detach: yes
+    ports:
+      - "9082:80"
+    restart_policy: unless-stopped
+    volumes:
+      - "{{APP_DIR}}/current:/var/www/html"
+      - "{{APP_DIR}}:{{APP_DIR}}"
+    env:
+      WORDPRESS_DB_HOST: "{{ DB_HOST }}"
+      WORDPRESS_DB_USER: "{{ DB_USER }}"
+      WORDPRESS_DB_PASSWORD: "{{ DB_PASS }}"
+      WORDPRESS_DB_NAME: "{{ DB_NAME }}"
+      WORDPRESS_TABLE_PREFIX: "{{ DB_TABLE_PREFIX }}"
+      WORDPRESS_EXTRA_FLAGS_FILE: .env
+      MUST_WAIT_DB: "10"
+
+
+- name: DOCKER | EXECUTANDO COMANDOS EM CONTAINER "{{ APP_NAME }}"
+  shell: docker exec "{{ APP_NAME }}" {{ item }} 
+  with_items:
+  - "chown -R www-data. /var/www/html/."

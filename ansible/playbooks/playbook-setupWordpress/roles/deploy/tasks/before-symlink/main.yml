@@ -1,0 +1,17 @@
+---
+- name: Steps a serem executados antes do Symlink
+  debug:
+    msg: ""
+
+- name: Removendo 'uploads' de shared
+  file:
+    path: "{{ ansistrano_deploy_to }}/shared/uploads"
+    state: absent
+
+- name: Copiando pasta 'uploads' para Shared
+  copy: 
+    src: "{{ ansistrano_deploy_to }}/current/wp-content/uploads"
+    dest: "{{ ansistrano_deploy_to }}/shared/"
+    remote_src: yes
+    follow: yes
+  ignore_errors: yes

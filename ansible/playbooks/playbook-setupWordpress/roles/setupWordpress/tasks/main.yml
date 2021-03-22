@@ -1,0 +1,19 @@
+- name: Wordpress | Setting up Folders
+  file:
+    state: directory
+    path: "/opt/leroy-wordpress/"
+
+- name: Wordpress | Copying docker-compose file...
+  copy:
+    src: /tmp/docker-compose.yml
+    dest: /opt/leroy-wordpress/
+    mode: preserve
+
+- name: Wordpress | Copying wp-config,php file...
+  copy:
+    src: /tmp/wp-config.php
+    dest: /opt/leroy-wordpress/
+    mode: preserve
+
+- name: Wordpress | Running docker-compose
+  shell: "cd /opt/leroy-wordpress/ ; docker-compose up -d"

@@ -1,0 +1,6 @@
+  - name: Ansible | Setup Server Playbook
+    hosts: local
+    become: yes
+    roles:
+      - setupDocker
+      - setupApache

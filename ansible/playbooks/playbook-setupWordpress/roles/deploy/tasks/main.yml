@@ -1,0 +1,17 @@
+---
+- name: General | Carregando Credenciais Ansible Vault
+  include_vars: 'main.vault'
+  
+- include: setup.yml
+
+- include: update-code.yml
+
+- include: before-symlink/main.yml
+
+- include: symlink-current.yml
+
+- include: after-symlink/main.yml
+
+- include: cleanup.yml
+
+

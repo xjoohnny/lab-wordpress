@@ -1,0 +1,5 @@
+.hosts*
+hosts*
+id_rsa*
+*.log
+.vagrant

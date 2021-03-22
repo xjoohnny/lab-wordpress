@@ -1,0 +1,11 @@
+- name: server01
+  cpus: 2
+  memory: 2048
+  hostname: server01.lab.com
+  ip: 192.168.55.11
+  system: ubuntu/bionic64
+  basic-tools: "true"
+  docker: "true"
+  ansible: "true"
+  apache: "true"
+  nginx: "false"

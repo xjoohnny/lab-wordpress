@@ -1,0 +1,41 @@
+---
+# tasks file for setupApache
+
+  - name: Apache2 | Installing Apache2 packages...
+    apt:
+      name: "{{ item }}"
+      update_cache: yes
+      state: latest
+      state: present
+    loop:
+      - apache2
+        
+###########################################################
+
+  - name: Apache2 | Copying vhost...
+    copy:
+      src: /tmp/default-vhost-example.conf
+      dest: /etc/apache2/sites-available/
+      mode: preserve
+
+###########################################################
+
+  - name: Apache2 | Enabling modules...
+    apache2_module:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - proxy
+      - proxy_http
+      - proxy_connect
+      - rewrite
+
+###########################################################
+
+
+  - name: Apache2 | Enabling site...
+    shell: "a2ensite default-vhost-example.conf ; a2dissite 000-default.conf"
+
+
+  - name: Apache2 | Restarting service...
+    shell: "service apache2 restart"

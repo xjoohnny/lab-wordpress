@@ -1,0 +1,12 @@
+- name: Ansible | Setup Wordpress Playbook
+  hosts: "local"
+  # become: yes
+  # become_user: "root"
+  # vars:
+  #   ansistrano_deploy_to: "{{ APP_DIR }}"
+  #   ansistrano_git_repo: "{{ GIT_REPO }}"
+  #   ansistrano_git_branch: "{{ GIT_BRANCH }}"
+  #   ansistrano_keep_releases: "{{ APP_KEEP_RELEASES | default('3') }}"
+
+  roles:
+    - setupWordpress

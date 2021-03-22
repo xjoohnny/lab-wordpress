@@ -1,0 +1,16 @@
+---
+# Clean up releases
+- name: DEPLOY |
+  shell: ls -1dt {{ ansistrano_releases_path.stdout }}/* | tail -n +$(({{ ansistrano_keep_releases }} + 1)) 
+  register: releases_clean
+  when: ansistrano_keep_releases > 0
+
+# Clean up releases
+- name: DEPLOY | Releases a serem removidas
+  debug:
+    msg: "{{ releases_clean.stdout_lines }}"  
+
+# Clean up releases
+- name: DEPLOY | Removendo Releases Antigas 
+  shell: ls -1dt {{ ansistrano_releases_path.stdout }}/* | tail -n +$(({{ ansistrano_keep_releases }} + 1)) | xargs rm -rf
+  when: ansistrano_keep_releases > 0

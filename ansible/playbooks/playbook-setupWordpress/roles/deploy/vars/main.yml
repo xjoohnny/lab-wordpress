@@ -1,0 +1,5 @@
+DB_PASS: "{{ vault.password }}"
+DB_USER: "{{ vault.user }}"
+DB_HOST: "172.30.0.44"
+DB_NAME: "vw_ofertasmoustache_wordpress"
+DB_TABLE_PREFIX: "ovk_"
