@@ -51,7 +51,8 @@ ansible-vault encrypt main.vault
 
 ## Alteração de variáveis
 O projeto vem com senhas e variáveis genéricas para facilitar o deploy, portanto, considere verificar os arquivos abaixo e alterar as variáveis para a sua melhor funcionalidade (especialmente os que contém senhas e usuários).
-##### Ansible
+
+#### Ansible
 ---
 >**lab-wordpress/ansible/playbooks/playbook-setupWordpress/roles/deploy/vars/main.yml**
 
