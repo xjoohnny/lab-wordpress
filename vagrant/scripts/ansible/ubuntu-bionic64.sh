@@ -21,10 +21,11 @@ echo "Done."
 
 echo "SETING UP SELF-ACCESS FROM ANSIBLE"
 echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config ; service ssh restart
+mv /tmp/.vault /etc/ansible/
 echo "Done."
 
 echo " "
 
 echo "APPLYING PLAYBOOKS"
 echo "1. Setting up Wordpress"
-ansible-playbook /etc/ansible/playbooks/playbook-setupWordpress/playbook-setupWordpress.yml
+ansible-playbook /etc/ansible/playbooks/playbook-setupWordpress/playbook-setupWordpress.yml --vault-password-file=/etc/ansible/.vault

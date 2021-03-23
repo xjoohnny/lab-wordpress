@@ -20,17 +20,41 @@
     src: "{{ ansistrano_deploy_to }}/shared/.htaccess"
     dest: "{{ ansistrano_deploy_to }}/current/"
     remote_src: yes
+  ignore_errors: yes
+
+- name: Criando pasta externa para Banco de Dados
+  file: 
+    state: directory 
+    path: "{{ DB_EXTERNAL_PATH }}"
+
+- name: DOCKER | Database Container
+  docker_container:
+    name: "{{ APP_NAME }}-db"
+    image: mysql:5.7
+    hostname: "{{ APP_NAME }}-db"
+    state: started
+    recreate: no
+    detach: yes
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ DB_EXTERNAL_PATH }}:/var/lib/mysql"
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ MYSQL_ROOT_PASSWORD }}"
+      MYSQL_DATABASE: "{{ DB_NAME }}"
+      MYSQL_USER: "{{ DB_USER }}"
+      MYSQL_PASSWORD: "{{ DB_PASS }}"
 
 - name: DOCKER | Wordpress Container
   docker_container:
-    name: "{{ APP_NAME }}"
+    name: "{{ APP_NAME }}-app"
     image: wordpress
-    hostname: "{{ APP_NAME }}"
+    hostname: "{{ APP_NAME }}-db"
     state: started
     recreate: yes
     detach: yes
+    links: "{{ APP_NAME }}-db:db"
     ports:
-      - "9082:80"
+      - "8000:80"
     restart_policy: unless-stopped
     volumes:
       - "{{APP_DIR}}/current:/var/www/html"
@@ -40,12 +64,10 @@
       WORDPRESS_DB_USER: "{{ DB_USER }}"
       WORDPRESS_DB_PASSWORD: "{{ DB_PASS }}"
       WORDPRESS_DB_NAME: "{{ DB_NAME }}"
-      WORDPRESS_TABLE_PREFIX: "{{ DB_TABLE_PREFIX }}"
-      WORDPRESS_EXTRA_FLAGS_FILE: .env
       MUST_WAIT_DB: "10"
 
 
-- name: DOCKER | EXECUTANDO COMANDOS EM CONTAINER "{{ APP_NAME }}"
-  shell: docker exec "{{ APP_NAME }}" {{ item }} 
+- name: DOCKER | EXECUTANDO COMANDOS EM CONTAINER "{{ APP_NAME }}-app"
+  shell: docker exec "{{ APP_NAME }}-app" {{ item }} 
   with_items:
-  - "chown -R www-data. /var/www/html/."
+    - "chown -R www-data. /var/www/html"

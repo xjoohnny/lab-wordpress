@@ -9,6 +9,7 @@
       - curl
       - gnupg-agent
       - software-properties-common
+      - python-pip
 
   - name: Docker | Adding Docker GPG Key...
     shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
@@ -37,3 +38,7 @@
 
   - name: Docker Compose | Creating symlink...
     shell: 'ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose'
+
+  - name: Pip | Installing docker-py via pip
+    pip:
+      name: docker-py

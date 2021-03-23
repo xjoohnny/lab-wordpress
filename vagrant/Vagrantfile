@@ -32,8 +32,7 @@ Vagrant.configure("2") do |config|
 
       config.vm.provision "file", source: "../ansible/playbooks", destination: "/tmp/playbooks"
       config.vm.provision "file", source: "../apache/default-vhost-example.conf", destination: "/tmp/default-vhost-example.conf"
-      config.vm.provision "file", source: "../dockerfiles/docker-compose.yml", destination: "/tmp/docker-compose.yml"
-      config.vm.provision "file", source: "../dockerfiles/wp-config.php", destination: "/tmp/wp-config.php"
+      config.vm.provision "file", source: "../.vault", destination: "/tmp/.vault"
 
       # BASIC-TOOLS CONFIG
       if server["basic-tools"] == "true" && server["system"] == "centos/7"

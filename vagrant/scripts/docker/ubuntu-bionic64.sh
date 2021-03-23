@@ -3,7 +3,7 @@
 
 echo "UBUNTU BIONIC64 - DOCKER"
 echo "1. Installing dependencies."
-sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common -y
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common python-pip -y
 echo "2. Adding GPG Key."
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 echo "3. Adding repository."
@@ -18,4 +18,6 @@ echo "7. Installing docker-compose"
 sudo curl -L "https://github.com/docker/compose/releases/download/1.28.5/docker-compose-Linux-x86_64" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+echo "8. Installing docker-py via pip"
+pip install docker-py
 echo "Done."

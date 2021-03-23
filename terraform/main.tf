@@ -61,18 +61,13 @@ resource "google_compute_instance" "default" {
   }
 
   provisioner "file" {
+    source      = "../.vault"
+    destination = "/tmp/.vault"
+  }
+
+  provisioner "file" {
     source      = "../apache/default-vhost-example.conf"
     destination = "/tmp/default-vhost-example.conf"
-  }
-
-  provisioner "file" {
-    source      = "../dockerfiles/docker-compose.yml"
-    destination = "/tmp/docker-compose.yml"
-  }
-
-  provisioner "file" {
-    source      = "../dockerfiles/wp-config.php"
-    destination = "/tmp/wp-config.php"
   }
 
   provisioner "remote-exec" {

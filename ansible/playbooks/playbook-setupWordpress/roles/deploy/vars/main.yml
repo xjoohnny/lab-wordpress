@@ -1,5 +1,12 @@
 DB_PASS: "{{ vault.password }}"
 DB_USER: "{{ vault.user }}"
-DB_HOST: "172.30.0.44"
-DB_NAME: "vw_ofertasmoustache_wordpress"
-DB_TABLE_PREFIX: "ovk_"
+MYSQL_ROOT_PASSWORD: "{{ vault.mysql_root }}"
+DB_HOST: "db"
+DB_NAME: "wordpress_database"
+
+DB_EXTERNAL_PATH: "/opt/db_data"
+
+APP_DIR: "/var/deploy/lab-wordpress"
+APP_NAME: "lab-wordpress"
+GIT_REPO: "https://github.com/xjoohnny/wordpress-example.git"
+GIT_BRANCH: "master"

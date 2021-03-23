@@ -4,18 +4,10 @@
   register: ansistrano_release_version
   when: ansistrano_release_version is not defined
 
-# - name: DEPLOY |
-#   command: echo "{{ ansistrano_releases_path.stdout }}/{{ ansistrano_release_version.stdout }}"
-#   register: ansistrano_release_path
-#
-# - name: DEPLOY | Release Path {{ ansistrano_release_path.stdout }}
-#   shell: echo >/dev/null
-
 - name: DEPLOY | Permissoes do diretorio
   file:
     path: "{{ansistrano_deploy_to}}"
     state: directory
-    owner: root
   become: yes
   # opcao ignore errors pra nao quebrar deploys que nao estejam compliant por alguma razao ainda nao mapeada
   ignore_errors: yes

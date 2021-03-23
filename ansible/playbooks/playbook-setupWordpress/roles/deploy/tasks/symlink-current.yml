@@ -1,4 +1,7 @@
 ---
 # Performs symlink exchange
 - name: DEPLOY | Criando Link para current
-  file: state=link path={{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }} src={{ ansistrano_release_path.stdout }}
+  file: 
+    state: link 
+    path: "{{ ansistrano_deploy_to }}/{{ ansistrano_current_dir }}" 
+    src: "{{ ansistrano_release_path.stdout }}"
