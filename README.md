@@ -12,9 +12,9 @@ Deploy automatizado de uma aplicação Wordpress com Banco de Dados MySQL em Con
 - [Apache](https://httpd.apache.org/) - proxy reverso para o acesso externo à aplicação na porta 80
 
 ## Requisitos técnicos para executar o projeto
-- [Terraform v0.14.8+](https://www.terraform.io/downloads.html)
-- [Virtual Box - v6.1+](https://www.virtualbox.org/wiki/Linux_Downloads)
-- [Vagrant 2.2.10+](https://www.vagrantup.com/downloads)
+- [Terraform v0.14.8+](https://www.terraform.io/downloads.html) (caso a opção Cloud seja escolhida)
+- [Virtual Box - v6.1+](https://www.virtualbox.org/wiki/Linux_Downloads) (caso a opção Máquina Virtual Local seja escolhida)
+- [Vagrant 2.2.10+](https://www.vagrantup.com/downloads) (caso a opção Máquina Virtual Local seja escolhida)
 - [Host com ao menos 4 GB de RAM. Recomendado executar em algum sistema Ubuntu-based]
 
 ## Instalação
