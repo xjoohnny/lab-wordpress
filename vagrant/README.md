@@ -1,57 +1,41 @@
-# custom-labs
+## Vagrant
 
-Vagrantfile para criação de laboratórios com Hashicorp Vagrant.
+#### Variáveis
+---
+>**lab-wordpress/vagrant/machines.yml**
 
-O objetivo deste projeto é usar as funcionalidades aplicadas ao arquivo Vagrantfile para montar laboratórios virtuais de forma simples e dinâmica.
+| Variável | Default | Descrição
+| ------ | ------ |  ------ | 
+| name | server01 | Nome do servidor no Virtual Box |
+| cpus | 2 | Número de CPUs Alocadas |
+| memory | 2048 | Memória RAM Alocada |
+| hostname | server01.lab.com | Hostname do Servidor |
+| ip | 192.168.55.11 | Endereço de IP do Servidor |
+| system | ubuntu/bionic64 | Sistema Operacional do Servidor **(Obs: somente Ubuntu 18.04+ permitido, suporte para CentOS em desenvolvimento)** |
+| basic-tools | true (Recomendado) | Instalação de ferramentas básicas de debug *[python, curl, wget, net-tools, git, telnet, software-properties-common]* através do script localizado em ***vagrant/scripts/basic-tools/{versão_do_SO}.sh*** |
+| docker | true (Obrigatório) | Instalação do Docker através do script localizado em ***vagrant/scripts/docker/{versão_do_SO}.sh*** 
+| ansible | true (Obrigatório) | Instalação do Ansible através do script localizado em ***vagrant/scripts/ansible/{versão_do_SO}.sh*** 
+| apache | true (Recomendado) | Instalação do Apache através do script localizado em ***vagrant/scripts/apache/{versão_do_SO}.sh*** 
+| nginx | false (Recomendado) | Instalação do Nginx através do script localizado em ***vagrant/scripts/nginx/{versão_do_SO}.sh***. Obs: automação do Deploy com o Nginx ainda em desenvolvimento. |
 
 ## Iniciando o Lab
-
-Faça o download dos arquivos disponíveis neste projeto através do git:
-
-```
-git clone https://github.com/xjoohnny/custom-labs.git
-```
-
-Acesse o diretório custom-labs e, através do arquivo machines.yml, personalize as características das máquinas virtuais que você deseja construír.
-
-```
-cd custom-labs
-vim machines.yml
-```
-Os parâmetros do arquivo .yml são:
-- **name:** server01
-- **cpus:** 1
-- **memory:** 1024
-- **hostname:** server01.lab.com
-- **ip:** 192.168.120.2
-- **system:** centos/7
-- **basic-tools:** "true"
-- **docker:** "true"
-- **ansible:** "true"
-- **apache:** "true"
-- **nginx:** "true"
-
-Os softwares *Docker, Ansible, Apache e Nginx* podem ser instalados automaticamente caso os seus respectivos parâmetros sejam deixados como ```"true"```.
-
-Para deixar o Lab mais completo, os aplicativos abaixo são instalados nos sistemas operacionais caso o parâmetro ```"basic-tools"``` seja deixado como `"true"`:
-- *epel-release (quando o SO é Centos/7)*
-- *wget*
-- *curl*
-- *vim*
-- *net-tools*
-- *bind-utils*
-- *git*
-- *python (quando o SO é ubuntu/bionic64)*
-- *software-properties-common (quando o SO é ubuntu/bionic64)*
-
-
-Subir máquinas virtuais:
-
-```
+```sh
+cd lab-wordpress/vagrant
 vagrant up
 ```
+O processo de criação do Projeto seguirá os seguintes passos:
+- Criação do servidor;
+- Provisionamento de Softwares necessários;
+- Criação dos Containers de Banco de Dados e Wordpress
+- Configuração do Apache como Proxy Reverso na porta 80
 
-Repare que, no mesmo diretório, serão criados os seguintes arquivos.
+Após a finalização dos passos acima, você pode acessar o endereço de IP definido em `machines.yml` em algum navegador, a tela de configuração do Wordpress deve aparecer para que você possa utilizá-lo como você preferir. 
+Para acessar o servidor, executar o comando abaixo (dentro da pasta do Vagrant):
+```sh
+vagrant ssh
+```
+
+Repare que, no diretório do Vagrant, serão criados os seguintes arquivos.
 
 Chaves de SSH:
 
@@ -66,7 +50,7 @@ Base para /etc/hosts:
 *O arquivo .hosts.tmp é um arquivo oculto para armazenamento da identificação das máquinas virtuais, no entanto, já que ele faz parte de um loop, deve conter uma série de valores repetidos - que são filtrados e armazenamos no arquivo hosts.
 
 
-## Para atualizar o laboratório
+## Para atualizar o laboratório:
 
 Se você tiver uma nova máquina virtual para o laboratório, resincronize o conteúdo do diretório /vagrant de dentro das VMs com o comando:
 
@@ -80,17 +64,9 @@ A seguir reprovisione as máquinas virtuais que já estão em execução para qu
 vagrant up --provision
 ```
 
-## Desligar/Remover o laboratório
-
-Para desligar as VMs:
-
-```
-vagrant halt
-```
-
-Para remover as VMs:
-
-```
+Para o ***desligar e destruir*** a VM criada pelo Projeto, executar os passos abaixo:
+```sh
+cd lab-wordpress/vagrant
 vagrant destroy -f
 ```
 
