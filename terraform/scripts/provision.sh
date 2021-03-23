@@ -25,7 +25,7 @@ echo "Done."
 echo " "
 
 echo "SETING UP SELF-ACCESS FROM ANSIBLE"
-ssh-keygen -b 2048 -t rsa -f id_rsa -q -N ''
+ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ''
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config ; service ssh restart
 mv /tmp/playbooks /etc/ansible/
