@@ -27,10 +27,10 @@ git clone https://github.com/xjoohnny/lab-wordpress.git
 
 A seguinte estrutura de diretórios será exibida:
 
->├── ansible  - **armazena as playbooks responsáveis pelo provisionamento de recursos e deploy**
->├── apache - **armazena os templates de vhost para o proxy reverso**
->├── terraform - **arquivos de configuração para o provisionamento em Cloud**
->└── vagrant - **arquivos de configuração para o provisionamento em VM**
+>-ansible  - **armazena as playbooks responsáveis pelo provisionamento de recursos e deploy**
+>-apache - **armazena os templates de vhost para o proxy reverso**
+>-terraform - **arquivos de configuração para o provisionamento em Cloud**
+>-vagrant - **arquivos de configuração para o provisionamento em VM**
 
 Criar arquivo de senha Ansible-vault:
 ```sh
