@@ -85,7 +85,7 @@ ProxyPassReverse "/" "http://localhost:8000/" --> alterar porta caso necessário
 
 | Variável | Default | Descrição
 | ------ | ------ |  ------ | 
-| pvt_key | ~/.ssh/id_rsa | Local de sua chave privada que será copiada para o server |
+| pvt_key | ~/.ssh/id_rsa | Local de sua chave privada que será usada na conexão com o server |
 | pub_key | ~/.ssh/id_rsa.pub | Local de sua chave pública que será inserida no "authorized_keys do server |
 | gcp_key | ~/gcp.json | Arquivo de autenticação do Google Cloud |
 | project_name | lab-wordpress-cloud | Nome do Projeto no Google Cloud |
